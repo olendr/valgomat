@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Valgomat
+        psr4_prefix: Valgomat
+        src_path: app
