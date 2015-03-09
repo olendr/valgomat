@@ -10,6 +10,7 @@ use Valgomat\Http\Requests;
 
 use Valgomat\Opinion;
 use Valgomat\Participant;
+use Valgomat\Party;
 
 class ApiController extends Controller {
 
@@ -46,7 +47,14 @@ class ApiController extends Controller {
 
     public function parties()
     {
-        return config('personalia')['last_vote']['options'];
+        if (Cache::has('parties')) {
+            return Cache::get('parties');
+        }
+
+        $parties = Party::all()->lists('name');
+
+        Cache::put('parties', $parties, 30);
+        return $parties;
     }
 
     public function store(CreateParticipantRequest $request)
